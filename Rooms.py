@@ -44,3 +44,42 @@ room = ["Escape", None, 20, None, 19]
 room_list.append(room)
 room = ["Kitchen", 6, None, None, None]
 room_list.append(room)
+
+current_room = 0
+done = False
+
+print (room_list[current_room][0])
+
+while not done:
+    direction = input("What direction would you like to go in - N, S, E, W?")
+    direction = direction.lower()
+    if direction == 'n' or direction == 'north':
+        next_room = room_list[current_room][1]
+        if next_room == None:
+            print ("You can't go that way")
+        else:
+            current_room = next_room
+            print (room_list[current_room][0])
+    elif direction == 'e' or direction == 'east':
+        next_room = room_list[current_room][2]
+        if next_room == None:
+            print ("You can't go that way")
+        else:
+            current_room = next_room
+            print (room_list[current_room][0])
+    elif direction == 's' or direction == 'south':
+        next_room = room_list[current_room][3]
+        if next_room == None:
+            print ("You can't go that way")
+        else:
+            current_room = next_room
+            print (room_list[current_room][0])
+    elif direction == 'w' or direction == 'west':
+        next_room = room_list[current_room][4]
+        if next_room == None:
+            print ("You can't go that way")
+        else:
+            current_room = next_room
+            print (room_list[current_room][0])
+    else:
+        print("That is not a valid direction")
