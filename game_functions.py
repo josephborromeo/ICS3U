@@ -2,10 +2,17 @@ import time
 from Rooms import *
 
 def commands(input):
+    '''
+    Displays Commands when the user types them in
+    All commands: /help, /search, /hp, /inv, /time
+    :param input: 
+    :return: 
+    '''
     input = input.split(" ")
+    # Help Command
     if input[0] == "/help":
-        print("\t\tCommands\n---------------------------------------\n/help\tPrints help dialog\n/search\tSearches the room for entities")
-
+        print("\t\tCommands\n---------------------------------------\n/help\tPrints help dialog\n/search\tSearches the room for entities\n/hp\t\tDisplays your current and max HP\n/inv\tDisplays your current and max inventory\n/time\tDisplays the current in game time")
+    # Search Command
     elif input[0] == "/search":
         print("Searching Room", end = '')
         time.sleep(0.25)
@@ -14,6 +21,13 @@ def commands(input):
         print('.', end ='')
         time.sleep(0.25)
         print('.', end ='')
+    #
+    elif input[0] == "/hp":
+        pass
+    elif input[0] == "/inv":
+        pass
+    elif input[0] == "/time":
+        pass
 
     else:
         print("That is not a valid input, type /help for a list of commands")
