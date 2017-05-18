@@ -1,6 +1,21 @@
 import time
 from Rooms import *
 
+# Define Game Variables
+
+# In game time
+time = 0
+
+# Starting HP
+HP = 10
+
+# Starting Attack
+attack = 2
+
+# Starting inventory Space
+max_inventory = 2
+player_inventory = 1
+
 def split_desc(room):
     decription = room_list[current_room][0].split('\n')
     print(decription[0] + '\n' + decription[-1])
