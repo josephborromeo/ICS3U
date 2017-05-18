@@ -40,7 +40,6 @@ def input_parser(input):
             print("You can't go that way")
         else:
             current_room = next_room
-            print (current_room)
             print(room_list[current_room][0])
     elif input == 'e' or input == 'east':
         next_room = room_list[current_room][2]
@@ -48,7 +47,6 @@ def input_parser(input):
             print("You can't go that way")
         else:
             current_room = next_room
-            print(current_room)
             print(room_list[current_room][0])
     elif input == 's' or input == 'south':
         next_room = room_list[current_room][3]
@@ -56,7 +54,6 @@ def input_parser(input):
             print("You can't go that way")
         else:
             current_room = next_room
-            print(current_room)
             print(room_list[current_room][0])
     elif input == 'w' or input == 'west':
         next_room = room_list[current_room][4]
@@ -64,7 +61,6 @@ def input_parser(input):
             print("You can't go that way")
         else:
             current_room = next_room
-            print(current_room)
             print(room_list[current_room][0])
     else:
         commands(input)
