@@ -1,6 +1,18 @@
 import time
 from Rooms import *
 
+def split_desc(room):
+    decription = room_list[current_room][0].split('\n')
+    print(decription[0] + '\n' + decription[-1])
+
+def display_description(room):
+    if room_list[current_room][5] == False:
+        print (room_list[current_room][0])
+        room_list[current_room][5] = True
+    else:
+        split_desc(room)
+
+
 def commands(input):
     '''
     Displays Commands when the user types them in
@@ -28,6 +40,8 @@ def commands(input):
         pass
     elif input[0] == "/time":
         pass
+    elif input[0] == "/info":
+        print (room_list[current_room][0])
 
     else:
         print("That is not a valid input, type /help for a list of commands")
@@ -40,27 +54,27 @@ def input_parser(input):
             print("You can't go that way")
         else:
             current_room = next_room
-            print(room_list[current_room][0])
+            display_description(current_room)
     elif input == 'e' or input == 'east':
         next_room = room_list[current_room][2]
         if next_room == None:
             print("You can't go that way")
         else:
             current_room = next_room
-            print(room_list[current_room][0])
+            display_description(current_room)
     elif input == 's' or input == 'south':
         next_room = room_list[current_room][3]
         if next_room == None:
             print("You can't go that way")
         else:
             current_room = next_room
-            print(room_list[current_room][0])
+            display_description(current_room)
     elif input == 'w' or input == 'west':
         next_room = room_list[current_room][4]
         if next_room == None:
             print("You can't go that way")
         else:
             current_room = next_room
-            print(room_list[current_room][0])
+            display_description(current_room)
     else:
         commands(input)
