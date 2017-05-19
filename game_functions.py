@@ -2,9 +2,10 @@ import time
 from Rooms import *
 
 # Define Game Variables
+player_name = input("Hello Adventurer! What is your name: ")
 
 # In game time
-time = 0
+start_time = time.time()
 
 # Starting HP
 HP = 10
@@ -15,6 +16,15 @@ attack = 2
 # Starting inventory Space
 max_inventory = 2
 player_inventory = 1
+
+def display_items(items):
+    pass
+
+def check_for_enemies(room):
+    pass
+
+def weapon_chooser():
+    pass
 
 def split_desc(room):
     decription = room_list[current_room][0].split('\n')
@@ -48,9 +58,8 @@ def commands(input):
         print('.', end ='')
         time.sleep(0.25)
         print('.', end ='')
-    #
     elif input[0] == "/hp":
-        pass
+        print ("Current HP: \t" + str(HP))
     elif input[0] == "/inv":
         pass
     elif input[0] == "/time":
@@ -67,6 +76,8 @@ def input_parser(input):
         next_room = room_list[current_room][1]
         if next_room == None:
             print("You can't go that way")
+        elif room_list[next_room][6] == True:
+            print ("Sorry that room is locked!")
         else:
             current_room = next_room
             display_description(current_room)
@@ -74,6 +85,8 @@ def input_parser(input):
         next_room = room_list[current_room][2]
         if next_room == None:
             print("You can't go that way")
+        elif room_list[next_room][6] == True:
+            print ("Sorry that room is locked!")
         else:
             current_room = next_room
             display_description(current_room)
@@ -81,6 +94,8 @@ def input_parser(input):
         next_room = room_list[current_room][3]
         if next_room == None:
             print("You can't go that way")
+        elif room_list[next_room][6] == True:
+            print ("Sorry that room is locked!")
         else:
             current_room = next_room
             display_description(current_room)
@@ -88,6 +103,8 @@ def input_parser(input):
         next_room = room_list[current_room][4]
         if next_room == None:
             print("You can't go that way")
+        elif room_list[next_room][6] == True:
+            print ("Sorry that room is locked!")
         else:
             current_room = next_room
             display_description(current_room)
