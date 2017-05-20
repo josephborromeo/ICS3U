@@ -6,9 +6,9 @@ done = False
 
 # Initial intro print statements
 print("You wake up in a random building with no recollection of how you got here.")
-time.sleep(4)
+time.sleep(0.5) # sleep = 4
 print("You have an uneasy feeling about this place and want to get out of here as soon as possible... \n")
-time.sleep(5)
+time.sleep(0.5) # sleep = 5
 print(room_list[current_room][0])
 
 print ('\nType /help for a list of in game commands')

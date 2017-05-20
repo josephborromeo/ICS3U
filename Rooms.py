@@ -1,6 +1,6 @@
 current_room = 0
 
-#   Room list syntax - [<Description>, North Room, East Room, South Room, West Room, Visited Flag, Locked Flag, Items in room]
+#   Room list syntax - [<Description>, North Room, East Room, South Room, West Room, Visited Flag, Locked Flag, Items in room, Enemy Flag]
 
              # Room 0
 room_list = [["Center Starting Room\nA Large empty room with a dim light hanging from the ceiling."
@@ -83,4 +83,14 @@ room_list = [["Center Starting Room\nA Large empty room with a dim light hanging
              ["Kitchen\nA Medium sized room filled with many kitchen appliances and stoves."
               "\nThere is a large metal table in the middle of the room that looks like it was used to prepare food on at one point."
               "\nThere is a door to the North", 6, None, None, None, False, False, ['food', 'food']]]
+
+# List containing player inventory
+# Syntax [# of keys, # of key cards, # of food items]
+player_inventory = [0, 0, 0]
+
+
+# List holding responses if nothing is found in a room
+found_none = ["Damn, not much in here...",
+              "Nothing to see here...",
+              "This room is emptier than a formatted hard drive..."]
 
