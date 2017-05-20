@@ -13,7 +13,9 @@ print(room_list[current_room][0])
 
 print ('\nType /help for a list of in game commands')
 
-while not done:
-    player_input = input("\nWhat direction would you like to go in - N, S, E, W? ")
-    player_input = player_input.lower()
-    input_parser(player_input)
+def main():
+    while not done:
+        player_input = input("\nWhat direction would you like to go in - N, S, E, W? ")
+        player_input = player_input.lower()
+        input_parser(player_input)
+main()
