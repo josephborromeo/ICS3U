@@ -5,7 +5,7 @@ from Rooms import *
 player_name = input("Hello Adventurer! What is your name: ")
 
 # In game time
-start_time = time.time()
+start_time = time.time() - 720
 
 # Starting HP
 HP = 10
