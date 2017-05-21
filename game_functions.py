@@ -16,14 +16,38 @@ attack = 2
 # Starting inventory Space
 max_inventory = 2
 
-
+# Working
 def take_items(input):
-    pass
+    global max_inventory, attack, player_inventory
+    if len(input) == 1:
+        print ('Invalid Paramaters: Specify an item to take')
+    else:
+        if inventory_count() < max_inventory:
+            if input[1] == 'key' and room_list[current_room][7].count('key'):
+                room_list[current_room][7].remove('key')
+                player_inventory[0]+=1
+            elif input[1] == 'bag' and room_list[current_room][7].count('bag'):
+                room_list[current_room][7].remove('bag')
+                max_inventory += 5
+            elif input[1] == 'food' and room_list[current_room][7].count('food'):
+                room_list[current_room][7].remove('food')
+                player_inventory[2]+=1
+            elif input[1] == 'key' and input[2] == 'card' and room_list[current_room][7].count('key_card'):
+                room_list[current_room][7].remove('key_card')
+                player_inventory[1]+=1
+            elif input[1] == 'weapon' and room_list[current_room][7].count('weapon'):
+                room_list[current_room][7].remove('weapon')
+                attack += 3
+            else:
+                print("That item is not here")
+        else:
+            print("Sorry, your inventory is too full to pick that up")
 
 # Counts how many items the player is currently holding
 def inventory_count():
+    global player_inventory
     inventory_amount = 0
-    for i in player_inventory():
+    for i in player_inventory:
         inventory_amount += i
     return inventory_amount
 
@@ -43,23 +67,26 @@ def game_time():
 
 # Working
 def display_items():
-    if room_list[current_room][7][0] is None:
-        print (found_none[random.randint(0,len(found_none)-1)])
+    if len(room_list[current_room][7]) > 0:
+        if room_list[current_room][7][0] is None:
+            print (found_none[random.randint(0,len(found_none)-1)])
+        else:
+            print("Found\n------")
+            for i in room_list[current_room][7]:
+                if i == 'key':
+                    print ("Key")
+                elif i == 'bag':
+                    print ('Bag')
+                elif i == 'food':
+                    print ('Food')
+                elif i == 'key_card':
+                    print ('Key Card')
+                elif i == 'weapon':
+                    print ('Weapon')
+                else:
+                    print ('Something goofed, contact developer')
     else:
-        print("Found\n------")
-        for i in room_list[current_room][7]:
-            if i == 'key':
-                print ("Key")
-            elif i == 'bag':
-                print ('Bag')
-            elif i == 'food':
-                print ('Food')
-            elif i == 'key_card':
-                print ('Key Card')
-            elif i == 'weapon':
-                print ('Weapon')
-            else:
-                print ('Something goofed')
+        print(found_none[random.randint(0, len(found_none) - 1)])
 
 # Working
 def enemy_encounter():
@@ -120,7 +147,7 @@ def enemy_encounter():
         input("Press any key to exit")
         sys.exit()
 
-
+# Working
 def check_for_enemies():
     # if enemies = false, then pass
     if room_list[current_room][8] == False:
@@ -163,29 +190,33 @@ def commands(input):
               "\n/time\t\tDisplays the current in game time"
               "\n/take item\tAdds the corresponding item to your inventory")
     # Search Command
-    elif input[0] == "/search":
+    elif input[0] == "/search" and len(input) == 1:
         print("Searching Room...\n")
         time.sleep(0.5)
         display_items()
 
-    elif input[0] == "/hp":
+    elif input[0] == "/hp" and len(input) == 1:
         print ("Current HP: \t" + str(HP))
 
-    elif input[0] == "/inv":
-        pass
+    elif input[0] == "/inv" and len(input) == 1:
+        print (player_inventory)
 
-    elif input[0] == "/time":
+    elif input[0] == "/time" and len(input) == 1:
         print ("The Current time is: " + str(time.time() - start_time))
         game_time()
 
     elif input[0] == "/take":
         take_items(input)
 
-    elif input[0] == "/stats":
+    elif input[0] == "/stats" and len(input) == 1:
+        # Display HP and attack, etc
         pass
 
     elif input[0] == "/info":   # Done
         print (room_list[current_room][0])
+
+    elif input[0] == "/use":
+        pass
 
     else:
         print("That is not a valid input, type /help for a list of commands")
