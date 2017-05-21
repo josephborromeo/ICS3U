@@ -93,4 +93,3 @@ player_inventory = [0, 0, 0]
 found_none = ["Damn, not much in here...",
               "Nothing to see here...",
               "This room is emptier than a formatted hard drive..."]
-

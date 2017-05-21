@@ -16,7 +16,8 @@ attack = 2
 # Starting inventory Space
 max_inventory = 2
 
-def take_items():
+
+def take_items(input):
     pass
 
 # Counts how many items the player is currently holding
@@ -26,7 +27,7 @@ def inventory_count():
         inventory_amount += i
     return inventory_amount
 
-# Mostly Working
+# Working
 def game_time():
     current_time = time.time() - start_time
     hour = int(current_time // 60)
@@ -42,25 +43,25 @@ def game_time():
 
 # Working
 def display_items():
-    if room_list[current_room][7][0] == None:
-        print (found_none[random.randint(0,len(found_none))])
+    if room_list[current_room][7][0] is None:
+        print (found_none[random.randint(0,len(found_none)-1)])
     else:
         print("Found\n------")
         for i in room_list[current_room][7]:
             if i == 'key':
-                print ("A Key")
+                print ("Key")
             elif i == 'bag':
-                print ('A Key')
+                print ('Bag')
             elif i == 'food':
                 print ('Food')
             elif i == 'key_card':
-                print ('A Key Card')
+                print ('Key Card')
             elif i == 'weapon':
-                print ('A Weapon')
+                print ('Weapon')
             else:
                 print ('Something goofed')
 
-# Working?
+# Working
 def enemy_encounter():
     global HP
     room_list[current_room][8] = False
@@ -153,8 +154,14 @@ def commands(input):
     '''
     input = input.split(" ")
     # Help Command
-    if input[0] == "/help":
-        print("\t\tCommands\n---------------------------------------\n/help\tPrints help dialog\n/search\tSearches the room for entities\n/hp\t\tDisplays your current and max HP\n/inv\tDisplays your current and max inventory\n/time\tDisplays the current in game time")
+    if input[0] == "/help" or input[0] == "/?":
+        print("\t\tCommands\n---------------------------------------"
+              "\n/help\t\tPrints help dialog"
+              "\n/search\t\tSearches the room for entities"
+              "\n/hp\t\t\tDisplays your current and max HP"
+              "\n/inv\t\tDisplays your current and max inventory"
+              "\n/time\t\tDisplays the current in game time"
+              "\n/take item\tAdds the corresponding item to your inventory")
     # Search Command
     elif input[0] == "/search":
         print("Searching Room...\n")
@@ -172,7 +179,7 @@ def commands(input):
         game_time()
 
     elif input[0] == "/take":
-        take_items()
+        take_items(input)
 
     elif input[0] == "/stats":
         pass

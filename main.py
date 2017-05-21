@@ -1,4 +1,3 @@
-import time
 from game_functions import *
 
 # Initialize game variables
@@ -11,7 +10,7 @@ print("You have an uneasy feeling about this place and want to get out of here a
 time.sleep(0.5) # sleep = 5
 print(room_list[current_room][0])
 
-print ('\nType /help for a list of in game commands')
+print('\nType /help for a list of in game commands')
 
 def main():
     while not done:
