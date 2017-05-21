@@ -16,14 +16,75 @@ attack = 2
 # Starting inventory Space
 max_inventory = 2
 
-# Working
+def unlock_prompt():
+    if next_room in key_rooms:
+        if player_inventory[0] > 0:
+            choice = input("Would you like to use a Key on this room? (Y or N): ")
+            choice = choice.lower()
+            if choice == 'y' or choice == 'yes':
+                player_inventory[0] -= 1
+                room_list[next_room][6] = False # Set locked flag to false
+                current_room = next_room
+                check_for_enemies()
+                display_description(current_room)
+            elif choice == 'n' or choice == 'no':
+                pass
+            else:
+                print("That is not a valid input")
+
+        else:
+            print ("Find a key to unlock this room")
+    elif next_room in key_card_rooms:
+        if player_inventory[1] > 0:
+            choice = input("Would you like to use a Key Card on this room? (Y or N): ")
+            choice = choice.lower()
+            if choice == 'y' or choice == 'yes':
+                player_inventory[1] -= 1
+                room_list[next_room][6] = False  # Set locked flag to false
+                current_room = next_room
+                check_for_enemies()
+                display_description(current_room)
+            elif choice == 'n' or choice == 'no':
+                pass
+            else:
+                print("That is not a valid input")
+# Fix so it moves to next room after unlocking
+        else:
+            print("Find a Key Card to unlock this room")
+    elif next_room == 21:
+        pass
+    else:
+        print ("GOOF! room is unlocked")
+
+def key_check():
+    global key_flag
+    key_flag = False
+    for i in room_list[current_room][7]:
+        if i == 'key':
+            key_flag = True
+        else:
+            pass
+
+def key_card_check():
+    global key_card_flag
+    key_card_flag = False
+    for i in room_list[current_room][7]:
+        if i == 'key_card':
+            key_card_flag = True
+        else:
+            pass
+
+
+# Key card and key not working
 def take_items(input):
     global max_inventory, attack, player_inventory
-    if len(input) == 1:
+    key_card_check()
+    key_check()
+    if len(input) == 1 or (len(input) == 2 and input[1]==''):
         print ('Invalid Paramaters: Specify an item to take')
     else:
         if inventory_count() < max_inventory:
-            if input[1] == 'key' and room_list[current_room][7].count('key'):
+            if len(input) == 2 and input[1] == 'key' and key_flag == True:
                 room_list[current_room][7].remove('key')
                 player_inventory[0]+=1
             elif input[1] == 'bag' and room_list[current_room][7].count('bag'):
@@ -32,16 +93,20 @@ def take_items(input):
             elif input[1] == 'food' and room_list[current_room][7].count('food'):
                 room_list[current_room][7].remove('food')
                 player_inventory[2]+=1
-            elif input[1] == 'key' and input[2] == 'card' and room_list[current_room][7].count('key_card'):
-                room_list[current_room][7].remove('key_card')
-                player_inventory[1]+=1
             elif input[1] == 'weapon' and room_list[current_room][7].count('weapon'):
                 room_list[current_room][7].remove('weapon')
                 attack += 3
+            elif len(input) > 2:
+                if (input[1] == 'key' and input[2] == 'card') and key_card_flag == True:
+                    room_list[current_room][7].remove('key_card')
+                    player_inventory[1]+=1
+                else:
+                    print("That item is not here")
             else:
                 print("That item is not here")
         else:
-            print("Sorry, your inventory is too full to pick that up")
+            # Think about fixing this so that it will only display if an item is actually in the room
+            print("Sorry, your inventory is too full")
 
 # Counts how many items the player is currently holding
 def inventory_count():
@@ -222,7 +287,7 @@ def commands(input):
         print("That is not a valid input, type /help for a list of commands")
 
 def input_parser(input):
-    global current_room, room_list
+    global current_room, room_list, next_room
 
     if input == 'n' or input == 'north':
         next_room = room_list[current_room][1]
@@ -230,6 +295,7 @@ def input_parser(input):
             print("You can't go that way")
         elif room_list[next_room][6] == True:
             print ("Sorry that room is locked!")
+            unlock_prompt()
         else:
             current_room = next_room
             check_for_enemies()
@@ -241,6 +307,7 @@ def input_parser(input):
             print("You can't go that way")
         elif room_list[next_room][6] == True:
             print ("Sorry that room is locked!")
+            unlock_prompt()
         else:
             current_room = next_room
             check_for_enemies()
@@ -252,6 +319,7 @@ def input_parser(input):
             print("You can't go that way")
         elif room_list[next_room][6] == True:
             print ("Sorry that room is locked!")
+            unlock_prompt()
         else:
             current_room = next_room
             check_for_enemies()
@@ -263,6 +331,7 @@ def input_parser(input):
             print("You can't go that way")
         elif room_list[next_room][6] == True:
             print ("Sorry that room is locked!")
+            unlock_prompt()
         else:
             current_room = next_room
             check_for_enemies()

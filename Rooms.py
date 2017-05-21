@@ -84,6 +84,9 @@ room_list = [["Center Starting Room\nA Large empty room with a dim light hanging
               "\nThere is a large metal table in the middle of the room that looks like it was used to prepare food on at one point."
               "\nThere is a door to the North", 6, None, None, None, False, False, ['food', 'food'], False]]
 
+key_rooms = [3,11,13,18] # 21 is unlocked automatically when 11 is unlocked - can't use key on it
+key_card_rooms = [15,18,20]
+
 # List containing player inventory
 # Syntax [# of keys, # of key cards, # of food items]
 player_inventory = [0, 0, 0]
