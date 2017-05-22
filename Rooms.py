@@ -61,7 +61,7 @@ room_list = [["Center Starting Room\nA Large empty room with a dim light hanging
              # Room 16
              ["Secret Lab\nA large room filled with lots of testing equipment and scientific apparati."
               "\nThere are cages in the Southwest corner that have bite marks on it."
-              "\nThere is a door to the North", 15, None, None, None, False, False, ['key_card', 'weapon'], True],
+              "\nThere is a door to the North", 15, None, None, None, False, False, ['key_card', 'weapon', 'key_card'], True],
              # Room 17
              ["Outside Courtyard\nA large outdoor area surrounded by 20 foot high brick walls."
               "\nThere is workout equipment in the Northwest corner and a basketball net on the East wall."
@@ -72,7 +72,7 @@ room_list = [["Center Starting Room\nA Large empty room with a dim light hanging
              # Room 19
              ["Head Office\nA Rectangular room with a large wooden desk in the center of it."
               "\nThis room seems to have been preserved the best out of all of them as it seems to be untouched."
-              "\nThere are doors to the East and West.", None, 20, None, 18, False, True, ['key_card'], False],
+              "\nThere are doors to the East and West.", None, 20, None, 18, False, True, [None], False],
              # Room 20
              ["Escape\nSmall hallway containing a door to the East and West."
               "\nThe West door leads to the outside.", None, 20, None, 19, False, True, [None], False],
@@ -85,7 +85,7 @@ room_list = [["Center Starting Room\nA Large empty room with a dim light hanging
               "\nThere is a door to the North", 6, None, None, None, False, False, ['food', 'food'], False]]
 
 key_rooms = [3,11,13,18] # 21 is unlocked automatically when 11 is unlocked - can't use key on it
-key_card_rooms = [15,18,20]
+key_card_rooms = [15,19,20]
 
 # List containing player inventory
 # Syntax [# of keys, # of key cards, # of food items]

@@ -14,10 +14,18 @@ HP = 10
 attack = 2
 
 # Starting counter attack - low % to make it fair
-counter_attack = 0.9
+counter_attack = 0.35
+
+# Define player's weapons
+weapon = "Fists"
 
 # Starting inventory Space
 max_inventory = 2
+
+# Need to implement library challenge
+# Need to implement usage of player name
+
+
 
 def eat():
     global HP
@@ -88,7 +96,7 @@ def key_card_check():
             pass
 
 
-# Key card and key not working
+#       WORKING
 def take_items(input):
     global max_inventory, player_inventory
     key_card_check()
@@ -205,7 +213,7 @@ def enemy_encounter():
                     print('Enemy HP: ' + str(enemy_health))
                     print('Your HP: ' + str(HP))
                     time.sleep(0.5)
-                    if random.random() <= counter_attack:
+                    if random.random() < counter_attack:
                         HP -= enemy_attack
                         print("\nThe enemy counter attacks and you take " + str(enemy_attack) + " damage")
                         print('Enemy HP: ' + str(enemy_health))
@@ -230,7 +238,7 @@ def enemy_encounter():
                     print('Enemy HP: ' + str(enemy_health))
                     print('Your HP: ' + str(HP))
                     time.sleep(0.5)
-                    if random.random() <= counter_attack:
+                    if random.random() < counter_attack:
                         HP -= enemy_attack
                         print("\nThe enemy counter attacks and you take " + str(enemy_attack) + " damage")
                         print('Enemy HP: ' + str(enemy_health))
@@ -270,7 +278,7 @@ def weapon_chooser():
     '''Gun or Sword
         Gun - +2 damage, only 20% chance of being hit by a counter attack
         Sword = +4 damage, 50% chance of being hit by a counter attack'''
-    global attack, counter_attack
+    global attack, counter_attack, weapon
     if current_room == 11:
         print("Choose your weapon"
               "\nGun - +2 Attack Damage, 20% chance of enemy counter attack"
@@ -280,11 +288,16 @@ def weapon_chooser():
             weapon = weapon.lower()
             if weapon == 'gun':
                 attack += 2
-                counter_attack = 0.8
+                counter_attack = 0.2
+                weapon = "Gun"
             elif weapon == 'sword':
                 attack += 4
                 counter_attack = 0.5
+                weapon = "Sword"
     elif current_room == 16:
+        attack += 5
+        counter_attack = 0.75
+        weapon = "Plasma Rifle"
         print("You pick up a plasma rifle from the lab"
               "\nYou gain +5 Attack with a 25% chance of an enemy counter attack")
         input("Press any key to continue")
@@ -345,9 +358,10 @@ def commands(input):
 
     elif input[0] == "/stats" and len(input) == 1:
         print("Current HP: \t " + str(HP))
-        print ("Current Attack:  " + str(attack))
-        print ("Inventory Space: " + str(inventory_count()) + '/' + str(max_inventory) + ' slots used')
-        print ("%.2f Minutes Played"%(((time.time()-start_time)/60)-12))
+        print("Current Attack:  " + str(attack))
+        print("Current Weapon:  " + weapon)
+        print("Inventory Space: " + str(inventory_count()) + '/' + str(max_inventory) + ' slots used')
+        print("%.2f Minutes Played"%(((time.time()-start_time)/60)-12))
 
     elif input[0] == "/info":   # Done
         print (room_list[current_room][0])
