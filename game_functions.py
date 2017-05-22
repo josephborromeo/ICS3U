@@ -19,6 +19,16 @@ counter_attack = 0.9
 # Starting inventory Space
 max_inventory = 2
 
+
+# Typing
+def print_slow(str):
+    for letter in str:
+        sys.stdout.write(letter)
+        sys.stdout.flush()
+        time.sleep(0.05)
+
+
+
 def eat():
     global HP
     if player_inventory[2] > 0:
