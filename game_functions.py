@@ -13,10 +13,22 @@ HP = 10
 # Starting Attack
 attack = 2
 
+# Starting counter attack - low % to make it fair
+counter_attack = 0.9
+
 # Starting inventory Space
 max_inventory = 2
 
+def eat():
+    global HP
+    if player_inventory[2] > 0:
+        player_inventory[2] -= 1
+        HP += 1
+    else:
+        print("You have no food to eat")
+
 def unlock_prompt():
+    global current_room, next_room
     if next_room in key_rooms:
         if player_inventory[0] > 0:
             choice = input("Would you like to use a Key on this room? (Y or N): ")
@@ -31,7 +43,6 @@ def unlock_prompt():
                 pass
             else:
                 print("That is not a valid input")
-
         else:
             print ("Find a key to unlock this room")
     elif next_room in key_card_rooms:
@@ -48,13 +59,15 @@ def unlock_prompt():
                 pass
             else:
                 print("That is not a valid input")
-# Fix so it moves to next room after unlocking
         else:
             print("Find a Key Card to unlock this room")
-    elif next_room == 21:
-        pass
+    elif current_room == 11 and next_room == 21:
+        room_list[next_room][6] = False  # Set locked flag to false
+        current_room = next_room
+        check_for_enemies()
+        display_description(current_room)
     else:
-        print ("GOOF! room is unlocked")
+        pass
 
 def key_check():
     global key_flag
@@ -77,7 +90,7 @@ def key_card_check():
 
 # Key card and key not working
 def take_items(input):
-    global max_inventory, attack, player_inventory
+    global max_inventory, player_inventory
     key_card_check()
     key_check()
     if len(input) == 1 or (len(input) == 2 and input[1]==''):
@@ -95,7 +108,7 @@ def take_items(input):
                 player_inventory[2]+=1
             elif input[1] == 'weapon' and room_list[current_room][7].count('weapon'):
                 room_list[current_room][7].remove('weapon')
-                attack += 3
+                weapon_chooser()
             elif len(input) > 2:
                 if (input[1] == 'key' and input[2] == 'card') and key_card_flag == True:
                     room_list[current_room][7].remove('key_card')
@@ -105,16 +118,24 @@ def take_items(input):
             else:
                 print("That item is not here")
         else:
-            # Think about fixing this so that it will only display if an item is actually in the room
-            print("Sorry, your inventory is too full")
+            if len(room_list[current_room][7]) == 0 or room_list[current_room][7][0] is None:
+                print("That item is not here")
+            else:
+                print("Sorry, your inventory is too full")
 
-# Counts how many items the player is currently holding
+# Counts how many items the player is currently holding - WORKING
 def inventory_count():
     global player_inventory
     inventory_amount = 0
     for i in player_inventory:
         inventory_amount += i
     return inventory_amount
+
+#           WORKING
+def display_inventory():
+    print("# of Keys: " + str(player_inventory[0]))
+    print("# of Key Cards: " + str(player_inventory[1]))
+    print("# of Food: " + str(player_inventory[2]))
 
 # Working
 def game_time():
@@ -168,7 +189,7 @@ def enemy_encounter():
         enemy_health = random.randint(10, 15)
         enemy_attack = 5
 
-    # Fight Sequence
+    # Fight Sequence - WORKING
     print ("OH NO! You encounter an enemy")
     print ('Enemy HP: ' + str(enemy_health))
     print ('Your HP: ' + str(HP) + "\tYour Attack: " + str(attack))
@@ -176,25 +197,49 @@ def enemy_encounter():
         fight_choice = input('Choose to aim for the Body(90% chance)\nor the Head(30% chance and +2 dmg): ')
         fight_choice.lower()
         if fight_choice == 'head':
-            hit = random.randint(1,10)
-            if hit >= 8:
+            hit = random.random() <= 0.3
+            if hit is True:
                 enemy_health -= (attack + 2)
-                print('Hit succesful! You did ' + str(attack + 2) + " damage")
-                print('Enemy HP: ' + str(enemy_health))
-                print('Your HP: ' + str(HP))
+                print('\nHit succesful! You did ' + str(attack + 2) + " damage")
+                if enemy_health > 0:
+                    print('Enemy HP: ' + str(enemy_health))
+                    print('Your HP: ' + str(HP))
+                    time.sleep(0.5)
+                    if random.random() <= counter_attack:
+                        HP -= enemy_attack
+                        print("\nThe enemy counter attacks and you take " + str(enemy_attack) + " damage")
+                        print('Enemy HP: ' + str(enemy_health))
+                        print('Your HP: ' + str(HP))
+                    else:
+                        pass
+                else:
+                    print('Enemy HP: 0')
+                    print('Your HP: ' + str(HP))
             else:
                 HP -= enemy_attack
-                print ("Oh no! You missed!")
+                print ("\nOh no! You missed!")
                 print ("The enemy hits you and you take " + str(enemy_attack) + " damage")
                 print('Enemy HP: ' + str(enemy_health))
                 print('Your HP: ' + str(HP))
         elif fight_choice == 'body':
-            hit = random.randint(1,10)
-            if hit >= 1:
+            hit = random.random() <= 0.9
+            if hit is True:
                 enemy_health -= attack
-                print('Hit succesful! You did ' + str(attack) + " damage")
-                print('Enemy HP: ' + str(enemy_health))
-                print('Your HP: ' + str(HP))
+                print('\nHit succesful! You did ' + str(attack) + " damage")
+                if enemy_health > 0:
+                    print('Enemy HP: ' + str(enemy_health))
+                    print('Your HP: ' + str(HP))
+                    time.sleep(0.5)
+                    if random.random() <= counter_attack:
+                        HP -= enemy_attack
+                        print("\nThe enemy counter attacks and you take " + str(enemy_attack) + " damage")
+                        print('Enemy HP: ' + str(enemy_health))
+                        print('Your HP: ' + str(HP))
+                    else:
+                        pass
+                else:
+                    print('Enemy HP: 0')
+                    print('Your HP: ' + str(HP))
             else:
                 HP -= enemy_attack
                 print ("Oh no! You missed!")
@@ -209,19 +254,42 @@ def enemy_encounter():
     else:
         print("YOU HAVE DIED")
         time.sleep(2)
-        input("Press any key to exit")
-        sys.exit()
+        input("Press enter to exit")
+        sys.exit() # Replace this with restart?
 
 # Working
 def check_for_enemies():
-    # if enemies = false, then pass
     if room_list[current_room][8] == False:
         pass
     else:
         enemy_encounter()
 
+
+# Working
 def weapon_chooser():
-    pass
+    '''Gun or Sword
+        Gun - +2 damage, only 20% chance of being hit by a counter attack
+        Sword = +4 damage, 50% chance of being hit by a counter attack'''
+    global attack, counter_attack
+    if current_room == 11:
+        print("Choose your weapon"
+              "\nGun - +2 Attack Damage, 20% chance of enemy counter attack"
+              "\nSword - +4 Attack Damage, 50% chance of enemy counter attack")
+        while attack == 2:
+            weapon = input("To choose type 'gun' or 'sword': ")
+            weapon = weapon.lower()
+            if weapon == 'gun':
+                attack += 2
+                counter_attack = 0.8
+            elif weapon == 'sword':
+                attack += 4
+                counter_attack = 0.5
+    elif current_room == 16:
+        print("You pick up a plasma rifle from the lab"
+              "\nYou gain +5 Attack with a 25% chance of an enemy counter attack")
+        input("Press any key to continue")
+    else:
+        print("There shouldn't be a weapon here")
 
 # Working
 def split_desc(room):
@@ -236,24 +304,26 @@ def display_description(room):
     else:
         split_desc(room)
 
-
 def commands(input):
     '''
     Displays Commands when the user types them in
-    All commands: /help, /search, /hp, /inv, /time
+    All commands: /help, /search, /hp, /inv, /time, /take, /info, /stats, /eat
     :param input: 
     :return: 
     '''
     input = input.split(" ")
     # Help Command
-    if input[0] == "/help" or input[0] == "/?":
-        print("\t\tCommands\n---------------------------------------"
+    if (input[0] == "/help" and len(input) == 1 ) or (input[0] == "/?" and len(input) == 1):
+        print("\t\t\t\tCommands\n----------------------------------------------------------"
               "\n/help\t\tPrints help dialog"
               "\n/search\t\tSearches the room for entities"
-              "\n/hp\t\t\tDisplays your current and max HP"
+              "\n/hp\t\tDisplays your current and max HP"
               "\n/inv\t\tDisplays your current and max inventory"
               "\n/time\t\tDisplays the current in game time"
-              "\n/take item\tAdds the corresponding item to your inventory")
+              "\n/take item\tAdds the corresponding item to your inventory"
+              "\n/info\t\tDisplays information about the current room"
+              "\n/stats\t\tDisplays current player stats"
+              "\n/eat\t\tConsumes 1 food item to gain 1 HP")
     # Search Command
     elif input[0] == "/search" and len(input) == 1:
         print("Searching Room...\n")
@@ -264,7 +334,7 @@ def commands(input):
         print ("Current HP: \t" + str(HP))
 
     elif input[0] == "/inv" and len(input) == 1:
-        print (player_inventory)
+        display_inventory()
 
     elif input[0] == "/time" and len(input) == 1:
         print ("The Current time is: " + str(time.time() - start_time))
@@ -274,14 +344,16 @@ def commands(input):
         take_items(input)
 
     elif input[0] == "/stats" and len(input) == 1:
-        # Display HP and attack, etc
-        pass
+        print("Current HP: \t " + str(HP))
+        print ("Current Attack:  " + str(attack))
+        print ("Inventory Space: " + str(inventory_count()) + '/' + str(max_inventory) + ' slots used')
+        print ("%.2f Minutes Played"%(((time.time()-start_time)/60)-12))
 
     elif input[0] == "/info":   # Done
         print (room_list[current_room][0])
 
-    elif input[0] == "/use":
-        pass
+    elif input[0] == "/eat":
+        eat()
 
     else:
         print("That is not a valid input, type /help for a list of commands")
