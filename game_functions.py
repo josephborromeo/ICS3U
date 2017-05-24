@@ -10,7 +10,7 @@ start_time = time.time() - 720
 # Starting HP
 HP = 10
 
-# Starting Attack
+# Starting Attack Damage
 attack = 2
 
 # Starting counter attack - low % to make it fair
@@ -22,16 +22,22 @@ weapon = "Fists"
 # Starting inventory Space
 max_inventory = 2
 
-# Need to implement library challenge
+# Need to implement library challenge - DONE
+
 # Need to implement usage of player name
 
-
+def secret_access():
+    if current_room == 14:
+        pass
+    else:
+        pass
 
 def eat():
     global HP
     if player_inventory[2] > 0:
         player_inventory[2] -= 1
         HP += 1
+        print("HP +1")
     else:
         print("You have no food to eat")
 
@@ -53,7 +59,7 @@ def unlock_prompt():
                 print("That is not a valid input")
         else:
             print ("Find a key to unlock this room")
-    elif next_room in key_card_rooms:
+    elif next_room in key_card_rooms and next_room != 15:
         if player_inventory[1] > 0:
             choice = input("Would you like to use a Key Card on this room? (Y or N): ")
             choice = choice.lower()
@@ -69,11 +75,55 @@ def unlock_prompt():
                 print("That is not a valid input")
         else:
             print("Find a Key Card to unlock this room")
-    elif current_room == 11 and next_room == 21:
+    elif (current_room == 11 and next_room == 21) or (current_room == 2 and room_list[11][6] is False):
         room_list[next_room][6] = False  # Set locked flag to false
         current_room = next_room
         check_for_enemies()
         display_description(current_room)
+    elif current_room == 14 and next_room == 15:
+        current_time = time.time() - start_time
+        hour = int(current_time // 60)
+        if hour >= 24:
+            hour = hour - ((hour // 24) * 24)
+            if hour > 10 and hour < 23:
+                if player_inventory[1] > 0:
+                    choice = input("Would you like to use a Key Card on this room? (Y or N): ")
+                    choice = choice.lower()
+                    if choice == 'y' or choice == 'yes':
+                        player_inventory[1] -= 1
+                        room_list[next_room][6] = False  # Set locked flag to false
+                        current_room = next_room
+                        check_for_enemies()
+                        display_description(current_room)
+                    elif choice == 'n' or choice == 'no':
+                        pass
+                    else:
+                        print("That is not a valid input")
+                else:
+                    print("Find a Key Card to unlock this room")
+            else:
+                print("It's not time for that...")
+        else:
+            if hour > 10 and hour < 23:
+                if player_inventory[1] > 0:
+                    choice = input("Would you like to use a Key Card on this room? (Y or N): ")
+                    choice = choice.lower()
+                    if choice == 'y' or choice == 'yes':
+                        player_inventory[1] -= 1
+                        room_list[next_room][6] = False  # Set locked flag to false
+                        current_room = next_room
+                        check_for_enemies()
+                        display_description(current_room)
+                    elif choice == 'n' or choice == 'no':
+                        pass
+                    else:
+                        print("That is not a valid input")
+                else:
+                    print("Find a Key Card to unlock this room")
+            else:
+                print("It's not time for that...")
+
+
     else:
         pass
 
@@ -95,7 +145,6 @@ def key_card_check():
         else:
             pass
 
-
 #       WORKING
 def take_items(input):
     global max_inventory, player_inventory
@@ -108,12 +157,15 @@ def take_items(input):
             if len(input) == 2 and input[1] == 'key' and key_flag == True:
                 room_list[current_room][7].remove('key')
                 player_inventory[0]+=1
+                print("Key added to inventory!")
             elif input[1] == 'bag' and room_list[current_room][7].count('bag'):
                 room_list[current_room][7].remove('bag')
                 max_inventory += 5
+                print("Inventory space increased!")
             elif input[1] == 'food' and room_list[current_room][7].count('food'):
                 room_list[current_room][7].remove('food')
                 player_inventory[2]+=1
+                print("Food added to inventory!")
             elif input[1] == 'weapon' and room_list[current_room][7].count('weapon'):
                 room_list[current_room][7].remove('weapon')
                 weapon_chooser()
@@ -121,6 +173,7 @@ def take_items(input):
                 if (input[1] == 'key' and input[2] == 'card') and key_card_flag == True:
                     room_list[current_room][7].remove('key_card')
                     player_inventory[1]+=1
+                    print("Key Card added to inventory!")
                 else:
                     print("That item is not here")
             else:

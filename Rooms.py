@@ -54,7 +54,7 @@ room_list = [["Center Starting Room\nA Large empty room with a dim light hanging
               "\nThere is a door to the East.", None, 12, None, None, False, True, ['key_card', 'key', 'food'], True],
              # Room 14
              ["Library\nA large room lined from floor to ceiling with shelves of books with many tables and chairs in the room."
-              "\nThere are doors to the North and East.", 17, 0, 15, None, False, False, [None], False],
+              "\nThere are doors to the North and Easth - Something odd is in the south...", 17, 0, 15, None, False, False, [None], False],
              # Room 15
              ["Secret Library Corridor\nSecret hall hidden behind one of the shelves in the library."
               "\nThere is another door to the South", 14, None, 16, None, False, True, [None], False],
