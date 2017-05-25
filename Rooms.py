@@ -75,7 +75,7 @@ room_list = [["Center Starting Room\nA Large empty room with a dim light hanging
               "\nThere are doors to the East and West.", None, 20, None, 18, False, True, [None], False],
              # Room 20
              ["Escape\nSmall hallway containing a door to the East and West."
-              "\nThe West door leads to the outside.", None, 20, None, 19, False, True, [None], False],
+              "\nThe West door leads to the outside...", None, None, None, 19, False, True, [None], False],
              # Room 21
              ["Cell-Weaponry Corridor\nA long corridor running East-West that connects Cell Hall 1 and the Weaponry."
               "\nThere are doors to the East and West.", None, 11, None, 2, False, True, [None], False],

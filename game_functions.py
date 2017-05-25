@@ -28,6 +28,12 @@ max_inventory = 2
 
 # Need to implement usage of player name
 
+def end_game():
+    # End game sequence... player_name has escaped the prison!
+    global done
+    done = True
+    pass
+
 def secret_access():
     if current_room == 14:
         pass
@@ -246,11 +252,11 @@ def enemy_encounter():
         enemy_health = 4
         enemy_attack = 1
     elif current_room == 3 or current_room == 16:
-        enemy_health = random.randint(6, 10)
+        enemy_health = random.randint(6, 8)
         enemy_attack = 3
     else:
-        enemy_health = random.randint(10, 15)
-        enemy_attack = 5
+        enemy_health = random.randint(10, 14)
+        enemy_attack = 4
 
     # Fight Sequence - WORKING
     print ("OH NO! You encounter an enemy")
@@ -431,7 +437,7 @@ def input_parser(input):
     global current_room, room_list, next_room
 
     if current_room == 20 and input == 'e' or input == 'east':
-        pass
+        end_game()
 
     elif input == 'n' or input == 'north':
         next_room = room_list[current_room][1]
