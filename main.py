@@ -8,7 +8,6 @@
 # #------------------------------------------------------------------------------
 
 from game_functions import *
-from pygame_functions import *
 
 # Main game loop
 def main():
@@ -24,9 +23,7 @@ def main():
 
     print('\nType /help for a list of in game commands')
     while not done:
-        show_screen()
         player_input = input("\nWhat direction would you like to go in - N, S, E, W? ")
         player_input = player_input.lower()
         input_parser(player_input)
-
 main()

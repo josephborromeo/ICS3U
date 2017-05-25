@@ -2,6 +2,8 @@ import time, random, sys
 from Rooms import *
 
 # Define Game Variables
+
+# Player Name
 player_name = input("Hello Adventurer! What is your name: ")
 
 # In game time
@@ -22,7 +24,7 @@ weapon = "Fists"
 # Starting inventory Space
 max_inventory = 2
 
-# Need to implement library challenge - DONE
+# Need to Do end game
 
 # Need to implement usage of player name
 
@@ -428,7 +430,10 @@ def commands(input):
 def input_parser(input):
     global current_room, room_list, next_room
 
-    if input == 'n' or input == 'north':
+    if current_room == 20 and input == 'e' or input == 'east':
+        pass
+
+    elif input == 'n' or input == 'north':
         next_room = room_list[current_room][1]
         if next_room == None:
             print("You can't go that way")
