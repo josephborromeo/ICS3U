@@ -1,11 +1,12 @@
+# Intitialize the current_room variable
 current_room = 0
 
+#   List of all rooms and flags associated with it
 #   Room list syntax - [<Description>, North Room, East Room, South Room, West Room, Visited Flag, Locked Flag, Items in room, Enemy Flag]
 
              # Room 0
 room_list = [["Center Starting Room\nA Large empty room with a dim light hanging from the ceiling."
               "\nYou see a shiny object in the corner of the room."
-              "\nUpon closer inspection you realize it’s a key and put it in your pocket."
               "\nYou notice doorways to your East, South, and West", None, 6, 1, 14, True, False, ['key'], False],
              # Room 1
              ["Hallway 1\nNarrow hallway lined with bricks.\nThere are doors to the North and South.", 0, None, 2, None, False, False, [None], False],
@@ -57,7 +58,7 @@ room_list = [["Center Starting Room\nA Large empty room with a dim light hanging
               "\nThere are doors to the North and Easth - Something odd is in the south...", 17, 0, 15, None, False, False, [None], False],
              # Room 15
              ["Secret Library Corridor\nSecret hall hidden behind one of the shelves in the library."
-              "\nThere is another door to the South", 14, None, 16, None, False, True, [None], False],
+              "\nThere is a door to the North and the South", 14, None, 16, None, False, True, [None], False],
              # Room 16
              ["Secret Lab\nA large room filled with lots of testing equipment and scientific apparati."
               "\nThere are cages in the Southwest corner that have bite marks on it."
@@ -75,7 +76,7 @@ room_list = [["Center Starting Room\nA Large empty room with a dim light hanging
               "\nThere are doors to the East and West.", None, 20, None, 18, False, True, [None], False],
              # Room 20
              ["Escape\nSmall hallway containing a door to the East and West."
-              "\nThe West door leads to the outside...", None, None, None, 19, False, True, [None], False],
+              "\nThe East door leads to the outside...", None, None, None, 19, False, True, [None], False],
              # Room 21
              ["Cell-Weaponry Corridor\nA long corridor running East-West that connects Cell Hall 1 and the Weaponry."
               "\nThere are doors to the East and West.", None, 11, None, 2, False, True, [None], False],
@@ -84,13 +85,16 @@ room_list = [["Center Starting Room\nA Large empty room with a dim light hanging
               "\nThere is a large metal table in the middle of the room that looks like it was used to prepare food on at one point."
               "\nThere is a door to the North", 6, None, None, None, False, False, ['food', 'food'], False]]
 
-key_rooms = [3,11,13,18] # 21 is unlocked automatically when 11 is unlocked - can't use key on it
+# List of rooms that can be accessed with a key
+# Room 21 is unlocked automatically when Room 11 is unlocked - can't use key on it
+key_rooms = [3,11,13,18]
+
+# List of rooms that can be accessed with a key card
 key_card_rooms = [15,19,20]
 
 # List containing player inventory
 # Syntax [# of keys, # of key cards, # of food items]
 player_inventory = [0, 0, 0]
-
 
 # List holding responses if nothing is found in a room
 found_none = ["Damn, not much in here...",
